@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Gestión de Productos</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+</head>
+<body>
+    <div class="container">
+    <h1><i class="fa-solid fa-box-open"></i> Gestión de Productos</h1>
+    <p class="total"><i class="fa-solid fa-table-list"></i> Total de productos: <strong>{{ total }}</strong></p>
+
+    <form class="formulario" action="/agregar" method="POST">
+        <input type="text" name="nombre" placeholder="Nombre del producto" required>
+        <input type="number" name="precio" step="0.01" placeholder="Precio" required>
+        <button type="submit"><i class="fa-solid fa-plus"></i> Agregar</button>
+    </form>
+
+
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Precio</th>
+                    <th>Eliminar</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for p in productos %}
+                <tr>
+                    <td>{{ p[0] }}</td>
+                    <td>{{ p[1] }}</td>
+                    <td>Q {{ "%.2f"|format(p[2]) }}</td>
+                    <td>
+                        <form action="/eliminar/{{ p[0] }}" method="POST">
+                            <button class="delete" onclick="return confirm('¿Eliminar producto?')">🗑️</button>
+                        </form>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
